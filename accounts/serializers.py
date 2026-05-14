@@ -1,7 +1,7 @@
 from django.contrib.auth import password_validation
 from rest_framework import serializers
 
-from provetrina.accounts.models import User
+from accounts.models import User
 
 
 def _get_falsy_field_value_err_msg(falsy):

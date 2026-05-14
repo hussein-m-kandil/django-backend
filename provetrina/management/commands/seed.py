@@ -2,8 +2,8 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone as tz
 from faker import Faker
 
-from provetrina.accounts.models import User
-from provetrina.profiles.models import (
+from accounts.models import User
+from provetrina.models import (
     Course,
     Education,
     Link,

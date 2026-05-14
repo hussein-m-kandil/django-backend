@@ -20,9 +20,9 @@ CORS_ALLOWED_ORIGINS = parse_comma_sep_str(os.getenv('ALLOWED_ORIGINS', ''))
 print('Allowed Origins:', CORS_ALLOWED_ORIGINS)
 
 INSTALLED_APPS = [
+    'main',
+    'accounts',
     'provetrina',
-    'provetrina.accounts',
-    'provetrina.profiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +46,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'provetrina.urls'
+ROOT_URLCONF = 'main.urls'
 
 TEMPLATES = [
     {
@@ -63,7 +63,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'provetrina.wsgi.application'
+WSGI_APPLICATION = 'main.wsgi.application'
 
 
 DATABASES = {
@@ -124,8 +124,9 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Provetrina API',
-    'DESCRIPTION': 'A platform where skilled professionals shine.',
+    'TITLE': 'Django Backend API',
+    'DESCRIPTION': 'A back-end web application built with Django'
+    ' to support multiple front-end applications.',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }

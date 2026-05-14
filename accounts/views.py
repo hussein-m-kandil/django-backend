@@ -3,9 +3,9 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
-from provetrina.accounts.models import User
-from provetrina.accounts.permissions import IsOwnerOrAdminUserReadOnly
-from provetrina.accounts.serializers import UserSerializer
+from accounts.models import User
+from accounts.permissions import IsOwnerOrAdminUserReadOnly
+from accounts.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

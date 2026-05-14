@@ -7,7 +7,7 @@ from django.utils import timezone as tz
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from provetrina.profiles import models
+from . import models
 
 
 class TestProfileModel(TestCase):

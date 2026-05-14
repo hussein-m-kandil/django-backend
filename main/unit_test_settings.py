@@ -1,6 +1,6 @@
 from django.conf import global_settings
 
-from provetrina.settings import *  # noqa: F403
+from main.settings import *  # noqa: F403
 
 print('Using unit test settings...')
 

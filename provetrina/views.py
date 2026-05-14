@@ -13,12 +13,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 
-from provetrina.profiles import models, serializers
-from provetrina.profiles.permissions import (
+from . import models, serializers
+from .permissions import (
     IsProfileOwnerOrReadOnlyPublicProfile,
     IsSectionOwnerOrReadOnlyPublicProfile,
 )
-from provetrina.profiles.resume import Resume
+from .resume import Resume
 
 
 class ProfileViewSet(viewsets.ModelViewSet):

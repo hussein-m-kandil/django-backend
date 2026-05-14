@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('end_date', models.DateTimeField(blank=True, null=True)),
                 ('title', models.CharField(max_length=255)),
                 ('summary', models.CharField(blank=True, default='', max_length=255)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profiles.profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='provetrina.profile')),
             ],
             options={
                 'ordering': ['order'],
@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255)),
                 ('academy', models.CharField(max_length=255)),
                 ('href', models.URLField(blank=True, default='')),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profiles.profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='provetrina.profile')),
             ],
             options={
                 'ordering': ['order'],
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 ('href', models.URLField(blank=True, default='')),
                 ('summary', models.CharField(blank=True, default='', max_length=511)),
                 ('keywords', models.CharField(blank=True, default='', max_length=511)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profiles.profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='provetrina.profile')),
             ],
             options={
                 'ordering': ['order'],
@@ -94,8 +94,8 @@ class Migration(migrations.Migration):
                 ('order', models.PositiveSmallIntegerField()),
                 ('href', models.URLField()),
                 ('label', models.CharField(blank=True, default='', max_length=255)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profiles.profile')),
-                ('project', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='profiles.project')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='provetrina.profile')),
+                ('project', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='provetrina.project')),
             ],
             options={
                 'ordering': ['order'],
@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
                 ('order', models.PositiveSmallIntegerField()),
                 ('name', models.CharField(max_length=255)),
                 ('keywords', models.CharField(blank=True, default='', max_length=511)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profiles.profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='provetrina.profile')),
             ],
             options={
                 'ordering': ['order'],
@@ -129,7 +129,7 @@ class Migration(migrations.Migration):
                 ('position', models.CharField(max_length=255)),
                 ('location', models.CharField(blank=True, default='', max_length=255)),
                 ('summary', models.CharField(blank=True, default='', max_length=511)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profiles.profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='provetrina.profile')),
             ],
             options={
                 'ordering': ['order'],

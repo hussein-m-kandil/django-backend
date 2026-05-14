@@ -1,6 +1,6 @@
 from django.db import models
 
-from provetrina.accounts.models import User
+from accounts.models import User
 
 
 class Profile(models.Model):

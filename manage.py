@@ -4,9 +4,9 @@
 import os
 import sys
 
-settings_path = 'provetrina.settings'
+settings_path = 'main.settings'
 if 'test' in sys.argv:
-    settings_path = 'provetrina.unit_test_settings'
+    settings_path = 'main.unit_test_settings'
 
 
 def main():

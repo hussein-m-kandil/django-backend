@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Provetrina</title>
+    <meta name="description"
+          content="A platform where skilled professionals shine." />
+    <meta name="keywords"
+          content="api,docs,provetrina,professional,portfolio,platform" />
+    <meta name="author" content="Hussein Kandil" />
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="index-label">Provetrina</h1>
+      <p>A platform where skilled professionals shine.</p>
+    </header>
+    <main>
+      <ul aria-labelledby="index-label">
+        <li>
+          {% url 'api-root' as api_root %}
+          <a href="{{ api_root }}">{{ api_root }}</a>
+        </li>
+        <li>
+          {% url 'swagger-ui' as swagger_ui %}
+          <a href="{{ swagger_ui }}">{{ swagger_ui }}</a>
+        </li>
+        <li>
+          {% url 'redoc' as redoc %}
+          <a href="{{ redoc }}">{{ redoc }}</a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

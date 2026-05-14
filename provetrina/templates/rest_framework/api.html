@@ -1,0 +1,19 @@
+{% extends "rest_framework/base.html" %}
+
+{% block title %}
+  {{ name }} - Provetrina API
+{% endblock title %}
+
+{% block branding %}
+  <div class="navbar-brand">Provetrina API</div>
+{% endblock branding %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <div class="text-center">
+    {% url 'swagger-ui' as swagger_ui %}
+    <a class="btn btn-sm btn-link" href="{{ swagger_ui }}">Swagger UI</a>
+    {% url 'redoc' as redoc %}
+    <a class="btn btn-sm btn-link" href="{{ redoc }}">Redoc</a>
+  </div>
+{% endblock breadcrumbs %}

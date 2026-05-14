@@ -1,0 +1,19 @@
+{% extends "rest_framework/login_base.html" %}
+
+{% block title %}
+  Log In - Provetrina
+{% endblock title %}
+
+{% block style %}
+  {{ block.super }}
+  <style>
+      form input.form-control {
+          width: 100%;
+      }
+  </style>
+{% endblock style %}
+
+{% block branding %}
+  <h1 class="text-center">Provetrina</h1>
+  <h2 class="text-center">Log In</h2>
+{% endblock branding %}

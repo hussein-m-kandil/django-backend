@@ -1,0 +1,32 @@
+services:
+  db:
+    env_file: ".env"
+    image: postgres:18
+    restart: no
+    environment:
+      - POSTGRES_DB=${PGDATABASE}
+      - POSTGRES_USER=${PGUSER}
+      - POSTGRES_PASSWORD=${PGPASSWORD}
+    ports:
+      - '${PGPORT}:${PGPORT}'
+    networks:
+      - pg-net
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U kanux -d postgres']
+      interval: 5s
+      timeout: 2s
+      retries: 10
+      start_period: 5s
+    volumes:
+      - pg-data:/var/lib/postgresql
+    command: ['postgres', '-c', 'listen_addresses=*']
+    logging:
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+networks:
+  pg-net: {}
+
+volumes:
+  pg-data: {}

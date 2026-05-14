@@ -1,0 +1,61 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if form.picture_path.errors %}
+{{ form.picture_path.errors }}
+{% endif %}
+
+<form action="" method="post" id="pic-form" class="m-auto">
+    {% csrf_token %}
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-content-center mt-5 w-100">
+        <div class="align-self-center d-flex flex-column justify-content-between w-25 m-auto mt-3">
+            <label class="form-check-label rounded" for="pic-0">
+                <img class="d-block w-100 rounded m-auto"
+                src="{% static 'monotext/images/woman.jpg' %}"
+                alt="Profile picture.">
+            </label>
+            <input class="form-check-input m-auto mt-2 bg-dark d-none" 
+                type="radio" name="picture_path" value="0" id="pic-0"
+                {% if user.user_picture.picture_path == 0 %}checked{% endif %}>
+        </div>
+        <div class="align-self-center d-flex flex-column justify-content-between w-25 m-auto mt-3">
+            <label class="form-check-label rounded" for="pic-1">
+                <img class="d-block w-100 rounded m-auto"
+                src="{% static 'monotext/images/man.jpg' %}"
+                alt="Profile picture.">
+            </label>
+            <input class="form-check-input m-auto mt-2 bg-dark d-none" 
+                type="radio" name="picture_path" value="1" id="pic-1" 
+                {% if user.user_picture.picture_path == 1 %}checked{% endif %}>
+        </div>
+    </div>
+    <div class="bg-light w-75 mx-auto my-5 rounded">
+        <button type="submit" form="pic-form" 
+            class="btn btn-outline-dark d-block w-100 border border-dark" 
+            role="button">
+            Save
+        </button>
+    </div>
+</form>
+
+<script>
+    // Errors logic
+    let errorList = document.getElementsByClassName("errorlist");
+    for (let i = 0; i < errorList?.length; i++) {
+        errorList[i].classList.add("text-danger", "m-auto", "mt-5");
+    }
+    // Selection interactivity logic
+    let labels = document.getElementsByClassName("form-check-label");
+    for (let i = 0; i < labels?.length; i++) {
+        if (labels[i].control.checked) {
+            labels[i].classList.add("border", "border-dark");
+        }
+        labels[i].control.addEventListener("input", (event) => {
+            labels[i].classList.add("border", "border-dark");
+            labels[(i + 1) % 2].classList.remove("border", "border-dark");
+        });
+    }
+</script>
+{% endblock %}

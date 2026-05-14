@@ -1,0 +1,95 @@
+{% extends 'base_generic.html' %} {% block content %}
+
+<h1 class="mx-auto text-left" style="font-weight: bold"> Login </h1>
+<div
+  class="mx-auto"
+  style="text-align: justify; font-weight: normal; font-style: italic"
+>
+  There are two accounts available for testing, and
+  their inputs should be filled automatically, if not, try
+  <em>"King"</em> or <em>"Queen"</em> for the username and
+  <em>"django123"</em> for the password.
+</div>
+
+{% if form.errors %}
+<p class="ms-5 text-danger"
+  >Your username and password didn't match. Please try again.</p
+>
+{% endif %} {% if next %} {% if user.is_authenticated %}
+<div id="next-url" style="display: none">{{ next }}</div>
+<script>
+  window.location.href = document.getElementById('next-url')?.innerText;
+</script>
+{% endif %} {% endif %}
+<div
+  class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-md-center"
+>
+  <div class="mt-3">
+    <h3 class="text-left my-2" style="font-weight: bold">Login as <em>King</em>: </h3>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <label class="text-left mt-2" for="username-1" style="font-weight: bold"
+        >Username:
+      </label>
+      <input
+        type="text"
+        name="username"
+        autocapitalize="none"
+        maxlength="150"
+        id="username-1"
+        class="form-control"
+        value="King"
+        required
+      />
+      <label class="text-left mt-2" for="password-1" style="font-weight: bold"
+        >Password:
+      </label>
+      <input
+        type="password"
+        name="password"
+        id="password-1"
+        class="form-control"
+        value="django123"
+        required
+      />
+      <input class="btn btn-outline-dark mt-2" type="submit" value="login" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </div>
+  <div class="mt-3">
+    <h3 class="text-left my-2" style="font-weight: bold"
+      >Login as <em>Queen</em>:
+    </h3>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <label class="text-left mt-2" for="username-2" style="font-weight: bold"
+        >Username:
+      </label>
+      <input
+        type="text"
+        name="username"
+        autocapitalize="none"
+        maxlength="150"
+        id="username-2"
+        class="form-control"
+        value="Queen"
+        required
+      />
+      <label class="text-left mt-2" for="password-2" style="font-weight: bold"
+        >Password:
+      </label>
+      <input
+        type="password"
+        name="password"
+        id="password-2"
+        class="form-control"
+        value="django123"
+        required
+      />
+      <input class="btn btn-outline-dark mt-2" type="submit" value="login" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </div>
+</div>
+
+{% endblock %}

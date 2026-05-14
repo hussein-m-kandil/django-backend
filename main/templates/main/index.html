@@ -41,6 +41,10 @@
           {% url 'redoc' as redoc %}
           <a href="{{ redoc }}">{{ redoc }}</a>
         </li>
+        <li>
+          {% url 'monotext:index' as monotext %}
+          <a href="{{ monotext }}">{{ monotext }}</a>
+        </li>
       </ul>
     </main>
   </body>

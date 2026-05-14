@@ -11,7 +11,7 @@ class TestUserModel(TestCase):
     def test_user_str_repr(self):
         username = 'test_user'
         user = User(username=username)
-        self.assertEqual(str(user), '@' + username)
+        self.assertEqual(str(user), username)
 
 
 class TestAccountsListAction(APITestCase):

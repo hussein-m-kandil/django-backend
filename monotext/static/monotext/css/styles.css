@@ -1,0 +1,32 @@
+:root {
+    --monotext-bg-color: #e0e0e0;
+    font-size: 14px;
+}
+
+body {
+    font-size: 100%;
+    background-color: var(--monotext-bg-color);
+}
+
+.form-check-input,
+.form-check-input:checked,
+.navbar-toggler,
+.form-control {
+    border: 0.05em solid rgba(128, 128, 128, 0.75);
+}
+
+.btn-close:active,
+.btn-close:focus,
+.btn-close:focus-visible,
+.form-check-input:active,
+.form-check-input:focus,
+.form-check-input:focus-visible,
+.navbar-toggler:active,
+.navbar-toggler:focus,
+.navbar-toggler:focus-visible,
+.form-control:active,
+.form-control:focus,
+.form-control:focus-visible {
+    box-shadow: 0px 0px 0.1em 0.1em rgba(0, 0, 0, 0.25);
+    border: 0.05em solid rgba(128, 128, 128, 0.75);
+}

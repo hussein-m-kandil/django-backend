@@ -1,8 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.utils import timezone as tz
 from faker import Faker
 
-from accounts.models import User
 from provetrina.models import (
     Course,
     Education,
@@ -12,6 +12,8 @@ from provetrina.models import (
     Skill,
     WorkExperience,
 )
+
+User = get_user_model()
 
 PROFILE_COUNT = 100
 

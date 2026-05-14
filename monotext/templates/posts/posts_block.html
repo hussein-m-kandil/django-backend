@@ -1,0 +1,166 @@
+{% load humanize %}
+{% load static %}
+
+{% if post_list %}
+{% for post in post_list %}
+<div class="card text-bg-light mx-auto my-3 shadow">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex flex-column align-items-start">
+                <h4 class="card-title">
+                    <strong><a class="link-dark text-decoration-none"
+                        href="{% url 'monotext:post_detail' post.owner.username post.id %}">
+                        {{ post.title }}
+                    </a></strong>
+                </h4>
+                <h6 class="card-subtitle my-2 text-muted h6">
+                    {{ post.updated_at|naturaltime }}
+                </h6>
+            </div>
+            <a class="d-block" href="{% url 'monotext:profile' post.owner.username %}"
+                style="max-width: 15%; max-height: 15%;">
+                <img class="w-100 rounded border border-dark opacity-75"
+                {% if post.owner.user_picture.picture_path == 0 %}
+                src="{% static 'monotext/images/woman.jpg' %}" 
+                {% else %}
+                src="{% static 'monotext/images/man.jpg' %}" 
+                {% endif %}
+                alt="The profile picture of post's owner.">
+            </a>
+        </div>
+        {% url 'monotext:post_detail' post.owner.username post.id as post_detail_url %}
+        {% if post.text|length > 128 %}
+        <h6 class="card-text">
+            {{ post.text|slice:":127"}}
+            <a href="{{ post_detail_url }}" class="link-secondary text-decoration-none">
+                <em>...Continue Reading.</em>
+            </a>
+        </h6>
+        {% else %}
+        <h6 class="card-text">
+            {{ post.text }}
+        </h6>
+        {% endif %}
+        <h6 class="h6 text-end mt-3">
+            <em>
+                <a href="{% url 'monotext:profile' post.owner.username %}"
+                    class="card-link link-secondary text-decoration-none h6">
+                    Written By <strong>{{ post.owner.username|capfirst }}</strong>
+                </a>
+            </em>
+        </h6>
+        <!-- Likes Modal -->
+        <div class="modal fade" id="likes-modal-{{ post.id }}" tabindex="-1" 
+            aria-labelledby="likes-modal-{{ post.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content" style="background-color: var(--monotext-bg-color);">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            Likes on 
+                            <em><a href="{% url 'monotext:post_detail' post.owner.username post.id %}" 
+                                class="link-dark text-decoration-none">
+                                {{ post.title }}
+                            </a></em>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <hr class="m-0 w-75 mx-auto" style="opacity: 1;">
+                    <div class="modal-body">
+                        <div class="m-auto" id="likes-modal-dialog-{{ post.id }}">
+                            <a href="#" class="link-secondary text-center text-decoration-none h6 mx-auto" 
+                                style="display: none;" onclick="return false;">
+                                <em>More...</em>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div id="post-likes-count-{{ post.id }}" class="post-likes-count h6">
+                <a href="{% url 'monotext:post_like_list' post.id %}" onclick="return false;"
+                    class="h6 link-secondary text-decoration-none">
+                    <span id="post-likes-count-number-{{ post.id }}">{{ post.likes.count }}</span> Likes
+                </a>
+            </div>
+            <div id="post-comments-count-{{ post.id }}" class="post-comments-count h6">
+                <a href="{{ post_detail_url }}" class="h6 link-secondary text-decoration-none">
+                    <span id="post-comments-count-number-{{ post.id }}">{{ post.comments.count }}</span> 
+                    Comment{{ post.comments.count|pluralize }}
+                </a>
+            </div>
+            {% if user.is_authenticated and post.owner == user %}
+            <!-- Button trigger delete modal -->
+            <div>
+                <a href="#" onclick="return false;" class="h6 link-secondary text-decoration-none"
+                    data-bs-toggle="modal" data-bs-target="#delete-modal-{{ post.id }}">
+                    Delete
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="mt-1">
+        <!-- No comments section -->
+        <div style="display: none;">
+            <span id="post-likes-url-{{ post.id }}">{% url 'monotext:post_likes' post.id %}</span>
+            <!--<span id="post-like-list-url-{{ post.id }}">{% url 'monotext:post_like_list' post.id %}</span>-->
+            <span id="post-comments-url-{{ post.id }}">{% url 'monotext:post_comments' post.id %}</span>
+            <span id="comments-page-counter-{{ post.id }}">1</span>
+        </div>
+        <form id="comment-form-{{ post.id }}" action="{% url 'monotext:comment_create' post.id %}" method="post"
+            class="comment-form d-flex flex-column" role="form">
+            {% csrf_token %}
+            <div name="errorsDiv" id="comment-form-errors-{{ post.id }}"></div>
+            <textarea class="form-control h6 text-center"
+                name="text" id="comment-text-{{ post.id }}" rows="2" maxlength="2048"
+                placeholder="New comment" role="textbox"></textarea> 
+            <input type="hidden" name="postID" value="{{ post.id }}" style="display: none;">
+            <button type="submit" form="comment-form-{{ post.id }}" class="btn btn-outline-dark my-2" role="button">
+                Comment
+            </button>
+            <button type="button" class="btn btn-outline-dark" 
+                {% if user in post.likes.all %}style="display: none;"{% endif %}
+                id="like-btn-{{ post.id }}" value="{% url 'monotext:post_like' post.id %}">
+                I like
+            </button>
+            <button type="button" class="btn btn-outline-dark" 
+                {% if not user in post.likes.all %}style="display: none;"{% endif %}
+                id="dislike-btn-{{ post.id }}" value="{% url 'monotext:post_dislike' post.id %}">
+                I don't like
+            </button>
+        </form>
+        {% if user.is_authenticated and post.owner == user %}
+        <!-- Delete Modal -->
+        <div class="modal fade" id="delete-modal-{{ post.id }}" tabindex="-1" 
+            aria-labelledby="delete-modal-{{ post.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content" style="background-color: var(--monotext-bg-color);">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Confirmation</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete "{{ post.title }}"?
+                      </div>
+                      <div class="modal-footer">
+                        <form action="{% url 'monotext:post_delete' post.owner.username post.id %}" method="post"
+                            id="delete-post-{{ post.id }}">
+                            {% csrf_token %}
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                                No, cancel
+                            </button>
+                            <button type="submit" form="delete-post-{{ post.id }}" class="btn btn-outline-danger">
+                                Yes, delete.
+                            </button>
+                        </form>
+                      </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p class="text-center text-danger m-5">There are no posts.</p>
+{% endif %}

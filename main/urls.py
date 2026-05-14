@@ -8,21 +8,12 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from accounts.views import UserViewSet
-from provetrina import views as prof_views
+from accounts.routes import router as accounts_router
+from provetrina.routes import router as provetrina_router
 
 router = DefaultRouter()
-router = DefaultRouter()
-router.register(r'accounts', UserViewSet)
-router.register(r'provetrina/profiles', prof_views.ProfileViewSet, 'profile')
-router.register(r'provetrina/projects', prof_views.ProjectViewSet, 'project')
-router.register(r'provetrina/courses', prof_views.CourseViewSet, 'course')
-router.register(r'provetrina/skills', prof_views.SkillViewSet, 'skill')
-router.register(r'provetrina/links', prof_views.LinkViewSet, 'link')
-router.register(r'provetrina/works', prof_views.WorkExperienceViewSet, 'work')
-router.register(
-    r'provetrina/educations', prof_views.EducationViewSet, 'education'
-)
+router.registry.extend(accounts_router.registry)
+router.registry.extend(provetrina_router.registry)
 
 api_urls = [
     path('', include(router.urls)),

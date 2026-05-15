@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.utils import timezone as tz
 from faker import Faker
@@ -10,10 +9,9 @@ from provetrina.models import (
     Profile,
     Project,
     Skill,
+    User,
     WorkExperience,
 )
-
-User = get_user_model()
 
 PROFILE_COUNT = 100
 
@@ -39,11 +37,9 @@ class Command(BaseCommand):
     help = 'Seeds the provetrina app with dummy profiles.'
 
     def handle(self, *args, **options):
-        self.stdout.write(
-            self.style.NOTICE('Seeding Provetrina with some profiles...')
-        )
+        self.stdout.write('Seeding Provetrina', ending='')
         for n in range(PROFILE_COUNT):
-            profile_num = n + 1
+            self.stdout.write('.', ending='' if n < PROFILE_COUNT - 1 else '\n')
             first_name = fake.unique.first_name()
             last_name = fake.unique.last_name()
             username = f'{first_name}_{last_name}'
@@ -66,7 +62,7 @@ class Command(BaseCommand):
                     end_date=end_date,
                     profile=profile,
                     order=i + 1,
-                    title=fake.sentence(fake.random_int(2, 5)),
+                    title=fake.sentence(fake.random_int(2, 5))[:-1],
                     summary=' '.join(fake.sentences(fake.random_int(1, 3))),
                 )
             for i in range(fake.random_int(1, 3)):
@@ -89,7 +85,7 @@ class Command(BaseCommand):
                     profile=profile,
                     order=i + 1,
                     href=fake.url(),
-                    title=fake.sentence(fake.random_int(2, 5)),
+                    title=fake.sentence(fake.random_int(2, 5))[:-1],
                     summary=' '.join(fake.sentences(fake.random_int(1, 3))),
                     keywords=','.join(fake.words(7)),
                 )
@@ -101,7 +97,7 @@ class Command(BaseCommand):
                     profile=profile,
                     order=i + 1,
                     href=fake.url(),
-                    name=fake.sentence(fake.random_int(2, 5)),
+                    name=fake.sentence(fake.random_int(2, 5))[:-1],
                     academy=fake.company(),
                 )
             for i in range(fake.random_int(3, 7)):
@@ -109,7 +105,7 @@ class Command(BaseCommand):
                 Skill.objects.create(
                     profile=profile,
                     order=i + 1,
-                    name=fake.sentence(fake.random_int(1, 3)),
+                    name=fake.sentence(fake.random_int(1, 3))[:-1],
                     keywords=','.join(fake.words(7)),
                 )
             for i in range(fake.random_int(2, 5)):
@@ -118,15 +114,10 @@ class Command(BaseCommand):
                     profile=profile,
                     order=i + 1,
                     href=fake.url(),
-                    label=fake.sentence(fake.random_int(1, 3)),
+                    label=fake.sentence(fake.random_int(1, 3))[:-1],
                 )
-            self.stdout.write(
-                self.style.NOTICE(
-                    f'{profile_num} profile{"s" if profile_num != 1 else ""} seeded.'
-                )
-            )
         self.stdout.write(
             self.style.SUCCESS(
-                f'Successfully seeded Provetrina with {PROFILE_COUNT} profiles.'
+                f'Provetrina successfully seeded with {PROFILE_COUNT} profile{"" if PROFILE_COUNT == 1 else "s"}.'
             )
         )

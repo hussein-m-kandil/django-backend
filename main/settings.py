@@ -108,6 +108,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
 AUTH_USER_MODEL = 'accounts.User'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)

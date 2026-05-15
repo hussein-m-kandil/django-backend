@@ -1,5 +1,7 @@
 import os
+import typing
 from pathlib import Path
+from urllib.parse import ParseResult, parse_qsl, urlparse
 
 from dotenv import load_dotenv
 
@@ -67,16 +69,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
+parsed_pg_url = typing.cast(ParseResult, urlparse(os.getenv('DATABASE_URL')))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('PGDATABASE'),
-        'HOST': os.getenv('PGHOST'),
-        'PORT': os.getenv('PGPORT'),
-        'USER': os.getenv('PGUSER'),
-        'PASSWORD': os.getenv('PGPASSWORD'),
-    },
+        'NAME': parsed_pg_url.path.replace('/', ''),
+        'USER': parsed_pg_url.username,
+        'PASSWORD': parsed_pg_url.password,
+        'HOST': parsed_pg_url.hostname,
+        'PORT': 5432,
+        'OPTIONS': dict(parse_qsl(parsed_pg_url.query)),
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [

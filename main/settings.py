@@ -18,7 +18,9 @@ DEBUG = os.getenv('DEBUG') == 'True'
 ALLOWED_HOSTS = parse_comma_sep_str(os.getenv('ALLOWED_HOSTS', ''))
 print('Allowed Hosts:', ALLOWED_HOSTS)
 
-CORS_ALLOWED_ORIGINS = parse_comma_sep_str(os.getenv('ALLOWED_ORIGINS', ''))
+ALLOWED_ORIGINS = parse_comma_sep_str(os.getenv('ALLOWED_ORIGINS', ''))
+CSRF_ALLOWED_ORIGINS = ALLOWED_ORIGINS
+CORS_ALLOWED_ORIGINS = ALLOWED_ORIGINS
 print('Allowed Origins:', CORS_ALLOWED_ORIGINS)
 
 INSTALLED_APPS = [
@@ -116,8 +118,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 AUTH_USER_MODEL = 'accounts.User'
 
-# Redirect to home URL after login (Default redirects to /accounts/profile/)
+# Redirect to monotext URL after log-in/out (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/monotext'
+LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
